@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using Thrift_Us.Models
+@model List<ApplicationUser>
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject UserManager<IdentityUser> _userManager
+
+<h2>User Management</h2>
+<div class="d-flex">  
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Role</th>
+                <th>Picture</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
+                    <td>@item.Address</td>
+                    <td>
+                        @foreach (var role in await _userManager.GetRolesAsync(item))
+                        {
+                            <span >@role</span>
+                        }
+                    </td>
+                     <td>
+                            <img src="@item.PicturePath" alt="Profile Picture" style="height:100px;"/>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        </div>
+                    </td>
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+  
+      
+    </div>
+    
+</div>

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Thrift_Us.ViewModels.RentalViewModel>
+
+@{
+    ViewData["Title"] = "Rent";
+}
+
+<h1>Rent</h1>
+
+<form method="post" class="mt-5">
+    @foreach (var item in Model)
+    {
+        <input type="hidden" name="ProductId" value="@item.ProductId" />
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <img src="@Url.Content("~/Content/Image/" + item.ImageUrl)" class="img-fluid" alt="Product Image" />
+            </div>
+            <div class="col-md-8">
+                <h2>@item.ProductName</h2>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <input id="description" class="form-control" value="@item.Description" readonly />
+                </div>
+                <div class="mb-3">
+                    <label for="refundChargePolicy" class="form-label">Refund Charge Policy:</label>
+                    <input id="refundChargePolicy" class="form-control" value="@item.Price" readonly />
+                </div>
+                <div class="mb-3">
+                    <label for="rentalPrice" class="form-label">Rental Price:</label>
+                    <input id="rentalPrice" class="form-control" value="@item.RentalPrice" readonly />
+                </div>
+                <div class="mb-3">
+                    <label for="size" class="form-label">Size:</label>
+                    <input id="size" class="form-control" value="@item.Size" readonly />
+                </div>
+                <div class="mb-3">
+                    <label for="condition" class="form-label">Condition:</label>
+                    <input id="condition" class="form-control" value="@item.Condition" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label for="rentalDuration" class="form-label">Rental Duration (in days):</label>
+                    <input type="number" id="rentalDuration" name="rentalDuration" class="form-control" required oninput="updateTotalPrice()" />
+                </div>
+
+                <!-- Existing code for displaying total price -->
+                <div class="row mt-3">
+                    <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 pr-4">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                <span class="text-info">Total Price</span>
+                                <strong id="totalPrice" class="text-info"></strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="summit" class="btn btn-primary mt-3" onclick="showRefundPolicyModal()">Rent Now</button>
+
+                <a asp-action="Index" class="btn btn-secondary mt-3">Back</a>
+            </div>
+        </div>
+    }
+</form>
+
+<script>
+    function updateTotalPrice() {
+        var refundChargePolicy = parseFloat(document.getElementById("refundChargePolicy").value);
+        var rentalDuration = parseFloat(document.getElementById("rentalDuration").value);
+
+        var totalPrice = refundChargePolicy * rentalDuration;
+
+        document.getElementById("totalPrice").innerText = totalPrice.toFixed(2);
+    }
+
+    function calculateRefundAmount() {
+        var refundChargePolicy = parseFloat(document.getElementById("refundChargePolicy").value);
+        var rentalPrice = parseFloat(document.getElementById("rentalPrice").value);
+        var rentalDuration = parseFloat(document.getElementById("rentalDuration").value);
+
+        var refundAmount = (refundChargePolicy * rentalDuration) - (rentalPrice * rentalDuration);
+
+        return refundAmount.toFixed(2);
+    }
+
+    function showRefundPolicyModal() {
+        var refundAmount = calculateRefundAmount();
+        var message = "The refund amount will be provided after the return of the rental clothes. The refund amount is: $" + refundAmount;
+        alert(message);
+    }
+</script>
+
+

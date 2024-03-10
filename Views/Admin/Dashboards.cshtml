@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Thrift_Us.Models
+@using Thrift_Us.Services.Interface
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject IOrderService _orderServices
+@inject IProductService _productServices
+@inject IRentalOrderService _rentalorderServices
+@{
+    ViewBag.Title = "Dashboards";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+    <div class="jumbotron">
+        <h1 class="display-4">Hello!! Admin</h1>
+        <p class="lead">This is the thrift e-commerce admin panel. We welcome you here.</p>
+    </div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 border bg-primary shadow rounded-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center text-light">Total Users</h5>
+                    <p class="card-text fs-1 text-center text-light">@UserManager.Users.Count()</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 border bg-success shadow rounded-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center text-light">Total Orders</h5>
+                    <p class="card-text fs-1 text-center text-light">@_orderServices.GetOrdersAsync(UserManager.GetUserId(User), "status").Result.Count()</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 border bg-warning shadow rounded-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center text-light display-6">Total Products</h5>
+                    <p class="card-text fs-1 text-center text-light">@_productServices.GetAllProducts().Count</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 border bg-danger shadow rounded-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center text-light">Total Rental Orders</h5>
+                    <p class="card-text fs-1 text-center text-light">@_rentalorderServices.GetOrdersAsync(UserManager.GetUserId(User), "status").Result.Count()</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@if (TempData["ResultOk"] != null)
+{
+    <dialog open>
+        <form method="dialog">
+            <h1 class="alert-success">@TempData["ResultOk"]</h1>
+            <button type="submit">OK</button>
+        </form>
+    </dialog>
+}
+<style>
+    .jumbotron {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>

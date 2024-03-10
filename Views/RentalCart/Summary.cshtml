@@ -1,0 +1,176 @@
+﻿@model Thrift_Us.ViewModel.CartOrderViewModel
+
+@{
+    ViewData["Title"] = "Summary";
+}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<form method="post" asp-action="SaveOrder" asp-controller="RentalOrder" id="orderform">
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Shipping Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="nameTxt">Name</label>
+                            <input id="nameTxt" type="text" asp-for="@Model.RentalOrderHeader.Name" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label for="phoneTxt">Phone</label>
+                            <input id="phoneTxt" type="phone" asp-for="@Model.RentalOrderHeader.Phone" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="addressTxt">Address</label>
+                            <input id="addressTxt" type="text" asp-for="@Model.RentalOrderHeader.Address" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label for="cityTxt">City</label>
+                            <input id="cityTxt" type="text" asp-for="@Model.RentalOrderHeader.City" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="provinceSelect">State</label>
+                            <select id="provinceSelect" asp-for="@Model.RentalOrderHeader.State" class="form-control">
+                                <option value="">Select Province</option>
+                                <option value="Province 1">Province 1</option>
+                                <option value="Province 2">Province 2</option>
+                                <option value="Province 3">Province 3</option>
+                                <option value="Province 4">Province 4</option>
+                                <option value="Province 5">Province 5</option>
+                                <option value="Province 6">Province 6</option>
+                                <option value="Province 7">Province 7</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <label for="postalCodeTxt">Postal Code</label>
+                            <input id="postalCodeTxt" type="text" asp-for="@Model.RentalOrderHeader.PostalCode" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="startDateTxt">Start Date</label>
+                            <input id="startDateTxt" type="date" asp-for="@Model.RentalOrderHeader.StartDate" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label for="rentalDurationTxt">Rental Duration</label>
+                            <input id="rentalDurationTxt" type="text" asp-for="@Model.RentalOrderHeader.RentalDuration" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="endDateTxt">End Date</label>
+                            <input id="endDateTxt" type="date" asp-for="@Model.RentalOrderHeader.EndDate" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label for="orderDateTxt">Order Date</label>
+                            <input id="orderDateTxt" type="date" asp-for="@Model.RentalOrderHeader.OrderDate" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Summary</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <ul class="list-group">
+                            @for (int i = 0; i < Model.ListOfRentalCart.Count; i++)
+                            {
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="form-row mb-3">
+                                            <span>Product Name: @Model.ListOfRentalCart[i].Product.ProductName</span>
+                                        </div>
+                                        <div class="form-row mb-3">
+                                            <span>Quantity: @Model.ListOfRentalCart[i].Count</span>
+                                        </div>
+                                        <div class="form-row mb-3">
+                                            <span>Rental Duration: @Model.ListOfRentalCart[i].RentalDuration</span>
+                                        </div>
+                                        <div class="form-row mb-3">
+                                            <span>Refund Amount: @Model.ListOfRentalCart[i].RefundAmount</span>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" asp-for="@Model.ListOfRentalCart[i].Product.ProductName" />
+                                    <input type="hidden" asp-for="@Model.ListOfRentalCart[i].Count" />
+                                    <input type="hidden" asp-for="@Model.ListOfRentalCart[i].Product.RentalPrice" />
+                                    <input type="hidden" asp-for="@Model.ListOfRentalCart[i].Product.Price" />
+                                    <input type="hidden" asp-for="@Model.ListOfRentalCart[i].RentalDuration" />
+                                    <input type="hidden" asp-for="@Model.ListOfRentalCart[i].RefundAmount" />
+                                    <input type="hidden" asp-for="@Model.ListOfRentalCart[i].ProductId" />
+                                    <input type="hidden" asp-for="@Model.ListOfRentalCart[i].Id" />
+                                </li>
+                            }
+                        </ul>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <p class="text-end fw-bold">Total Amount: <span id="orderTotal">@Model.RentalOrderHeader.OrderTotal</span></p>
+
+                                    </div>
+                                    <div class="col-md-8">
+                                        <button asp-action="SaveOrder" asp-controller="RentalOrder" id="Pay-with-delivery" class="btn w-100">
+                                            <img src="~/Image/cash.png" alt="Khalti" style="max-height: 50px; margin-right: 10px;">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+<script>
+    // JavaScript code to handle rental duration validation
+    document.addEventListener("DOMContentLoaded", function () {
+        var startDateInput = document.getElementById("startDateTxt");
+        var endDateInput = document.getElementById("endDateTxt");
+        var rentalDurationInput = document.getElementById("rentalDurationTxt");
+        var maxRentalDuration = parseInt(rentalDurationInput.value); // Maximum allowed rental duration
+
+        startDateInput.addEventListener("change", function () {
+            var startDate = new Date(startDateInput.value);
+            var endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + maxRentalDuration);
+            endDateInput.value = endDate.toISOString().split('T')[0];
+        });
+
+        rentalDurationInput.addEventListener("change", function () {
+            var startDate = new Date(startDateInput.value);
+            var endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + parseInt(rentalDurationInput.value));
+            endDateInput.value = endDate.toISOString().split('T')[0];
+        });
+
+        endDateInput.addEventListener("change", function () {
+            var startDate = new Date(startDateInput.value);
+            var endDate = new Date(endDateInput.value);
+            var rentalDuration = (endDate - startDate) / (1000 * 60 * 60 * 24);
+
+            // Check if the rental duration exceeds the maximum allowed duration
+            if (rentalDuration > maxRentalDuration) {
+                // Adjust the end date to match the maximum allowed duration
+                endDate.setDate(startDate.getDate() + maxRentalDuration);
+                endDateInput.value = endDate.toISOString().split('T')[0];
+                // Update the rental duration input field
+                rentalDurationInput.value = maxRentalDuration;
+            }
+        });
+    });
+</script>
+

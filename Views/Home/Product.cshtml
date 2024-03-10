@@ -1,0 +1,201 @@
+﻿﻿
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Thrift_Us.ViewModel.Product.ProductIndexViewModel>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thrift Us - Your Gateway to Unique Finds</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Thrift_Us</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Thrift_Us.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <style>
+        body {
+            background-color: floralwhite;
+        }
+
+        .container {
+            background-color: linen;
+            border: 1px solid black;
+            padding: 2rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            color: black;
+        }
+
+        .card {
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            transition: box-shadow 0.3s ease;
+            background-color: papayawhip;
+        }
+
+            .card:hover {
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            }
+
+        .card-img-top {
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .card-title {
+            color: hotpink;
+        }
+
+        .card-text {
+            color: #495057;
+        }
+
+        .col-lg-4 col-md-4 col-sm-12 mb-4 {
+            width: 250px;
+        }
+
+        .card h-100 {
+            width: 200px;
+        }
+
+        .card-img-top {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: black;
+            border-color: lightpink;
+        }
+
+            .btn-primary:hover {
+                background-color: lightpink;
+                border-color: hotpink;
+            }
+
+        footer.bg-light {
+            background-color:floralwhite !important;
+            color: #555;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+     
+ 
+
+        footer .footer {
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+            footer ul li {
+                margin-bottom: 10px;
+            }
+
+                footer ul li i {
+                    margin-right: 8px;
+                }
+
+        footer h4 {
+            color: #000;
+            margin-bottom: 15px;
+        }
+
+
+      
+    </style>
+</head>
+<body>
+
+
+    
+   
+        <h2 class="text-center mb-4">All Products</h2>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
+                    <div class="card h-100">
+                        <div class="card-img-top">
+                            <img src="/Content/Image/@item.ImageUrl" alt="Product Image" style="height:220px; ">
+                        </div>
+                        <div class="card-body">
+                            <span><b>@Html.DisplayFor(modelItem => item.ProductName)</b> </span>
+                            <span>@Html.DisplayFor(modelItem => item.Description)</span>
+                            <br>
+                            <span>@Html.DisplayFor(modelItem => item.Price)</span>
+                            <br>
+                            <span>@Html.DisplayFor(modelItem => item.Size)</span>
+                            <br>
+                            <span>@Html.DisplayFor(modelItem => item.RentalPrice)</span>
+                            <br>
+                        </div>
+                        <div class="card-footer">
+                            <div class="btn-group">
+
+                            <a asp-action="Details" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-warning mx-1 rounded">Details</a>
+                            </div>
+                        <div class="btn-group">
+                            <a asp-action="Rent" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-danger mx-1 rounded">Rent</a>
+                        </div>
+                        <div class="btn-group">
+                            <form asp-action="Like" asp-controller="Like" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button type="submit" class="btn btn-primary mx-1 rounded">Like</button>
+                            </form>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    
+
+
+
+
+
+    </div>
+    </div>
+
+
+    </div>
+    </div>
+
+
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+
+</body>
+<
+<footer class="bg-light py-5">
+    <div class="container text-center">
+        <span>© Copyright 2024 Thrift-Us. All rights reserved.</span>
+    </div>
+</footer>
+
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>
+
+
+
+
+
+
+

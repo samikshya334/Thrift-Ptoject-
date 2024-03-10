@@ -1,0 +1,79 @@
+﻿@model Thrift_Us.ViewModel.CartViewModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+@if (TempData["message"] != null)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('@TempData["message"]');
+        });
+    </script>
+}
+<form asp-action="Details" method="post">
+   
+    <input type="hidden" name="ProductId" value="@Model.ProductId" />
+    <input type="hidden" id="hiddenQuantity" name="Count" value="@Model.Count" />
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            Product Details
+        </div>
+        <div class="card-body">
+            <div class="row">
+               
+                <div class="col-md-4">
+                    <img src="@Url.Content("~/Content/Image/" + Model.ImageUrl)" class="img-fluid" alt="Product Image">
+                </div>
+
+              
+                <div class="col-md-8">
+                    <h3 class="card-title">@Model.ProductName</h3>
+                    <p class="card-text">@Model.Description</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Price: @Model.Price</li>
+                        <li class="list-group-item">Size: @Model.Size</li>
+                        <li class="list-group-item">Condition: @Model.Condition</li>
+                        <li class="list-group-item">
+                            Quantity:
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="changeQuantity(false)">-</button>
+                            <span id="quantity">@Model.Count</span>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="changeQuantity(true)">+</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            <div class="card-footer">
+                <button type="submit" value="Add to Cart" class="btn btn-primary btn-block">
+                    Add to Cart
+                </button>
+                <button type="submit" value="Index" class="btn btn-primary btn-block">
+                  Back
+                </button>
+            </div>
+    </div>
+</div>
+   
+</form>
+<script>
+    function changeQuantity(increment) {
+        var quantityElement = document.getElementById('quantity');
+        var hiddenQuantityInput = document.getElementById('hiddenQuantity');
+        var currentQuantity = parseInt(quantityElement.innerText);
+
+        if (increment) {
+            currentQuantity++;
+        } else if (currentQuantity > 1) {
+            currentQuantity--;
+        }
+
+        quantityElement.innerText = currentQuantity;
+        hiddenQuantityInput.value = currentQuantity; 
+    }
+    
+
+</script>

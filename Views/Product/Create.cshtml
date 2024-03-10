@@ -1,0 +1,116 @@
+﻿@model Thrift_Us.ViewModel.Product.ProduceCreateViewModel
+
+@{
+   
+
+    if (User.IsInRole("Buyer"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (User.IsInRole("Seller"))
+    {
+        Layout = "~/Views/Shared/_SellerLayout.cshtml";
+
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    }
+  
+
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form  asp-action="Create" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger text-centre"></div>
+                   
+                    <div class="form-group">
+                        <label asp-for="ProductName" type="text" class="control-label">Product Name</label>
+                        <input asp-for="ProductName" class="form-control" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label">Description</label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label">Price</label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                <div class="form-group">
+                    <label asp-for="RentalPrice" class="control-label">RentalPrice</label>
+                    <input asp-for="RentalPrice" class="form-control" />
+                    <span asp-validation-for="RentalPrice" class="text-danger"></span>
+                </div>
+             
+
+                    <div class="form-group">
+
+                    <label asp-for="Size" class="control-label">Size</label>
+
+                        <label asp-for="Size" class="control-label">Size</label>
+                        <input asp-for="Size" class="form-control" />
+
+                        <select name="Size" class="form-control">
+                            @foreach (var status in Enum.GetValues(typeof(Size)))
+                            {
+                                <option value="@((int)status)">@status.ToString()</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Size" class="text-danger"></span>
+                    </div>
+                <div class="form-group">
+                    <label asp-for="Quantity" class="control-label">Quantity</label>
+                    <input asp-for="Quantity" class="form-control" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+
+                    <div class="form-group">
+                        <label asp-for="Condition" class="control-label">Condition</label>
+                        <input asp-for="Condition" class="form-control" />
+                        <span asp-validation-for="Condition" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CategoryId" class="control-label"></label>
+                        <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control"></select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label asp-for="ImagePath" class="control-label">Image</label>
+                        <input type="file" asp-for="ImagePath" class="form-control" multiple />
+                        <span asp-validation-for="ImagePath" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PostedOn" class="control-label">Posted On</label>
+                        <input asp-for="PostedOn" class="form-control" />
+                        <span asp-validation-for="PostedOn" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                        
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>  
+</body>
+</html>

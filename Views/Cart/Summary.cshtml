@@ -1,0 +1,119 @@
+﻿@model Thrift_Us.ViewModel.CartOrderViewModel
+
+
+@{
+    ViewData["Title"] = " Summary";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<form method="post" asp-action="SaveOrder" asp-controller="Order" id="orderform">
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Shipping Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="nameTxt">Name</label>
+                            <input id="nameTxt" type="text" asp-for="@Model.OrderHeader.Name" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label for="phoneTxt">Phone</label>
+                            <input id="phoneTxt" type="phone" asp-for="@Model.OrderHeader.Phone" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="addressTxt">Address</label>
+                            <input id="addressTxt" type="text" asp-for="@Model.OrderHeader.Address" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label for="cityTxt">City</label>
+                            <input id="cityTxt" type="text" asp-for="@Model.OrderHeader.City" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="provinceSelect">State</label>
+                            <select id="provinceSelect" asp-for="@Model.RentalOrderHeader.State" class="form-control">
+                                <option value="">Select Province</option>
+                                <option value="Province 1">Province 1</option>
+                                <option value="Province 2">Province 2</option>
+                                <option value="Province 3">Province 3</option>
+                                <option value="Province 4">Province 4</option>
+                                <option value="Province 5">Province 5</option>
+                                <option value="Province 6">Province 6</option>
+                                <option value="Province 7">Province 7</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="postalCodeTxt">Postal Code</label>
+                            <input id="postalCodeTxt" type="text" asp-for="@Model.OrderHeader.PostalCode" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="dateTxt">Pick Date</label>
+                            <input id="dateTxt" type="date" asp-for="@Model.OrderHeader.DateofPick" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label for="timeTxt">Pick Time</label>
+                            <input id="timeTxt" type="text" asp-for="@Model.OrderHeader.TimeofPick" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <label for="orderDateTxt">Order Date</label>
+                            <input id="orderDateTxt" type="date" asp-for="@Model.OrderHeader.OrderDate" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Summary</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @for (int i = 0; i < Model.ListOfCart.Count; i++)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>@Model.ListOfCart[i].Product.ProductName</span>
+                                <span>QTY: @Model.ListOfCart[i].Count</span>
+                                <span>@Model.ListOfCart[i].TotalPrice</span>
+
+                          
+                                <input type="hidden" asp-for="@Model.ListOfCart[i].Product.ProductName" />
+                                <input type="hidden" asp-for="@Model.ListOfCart[i].Count" />
+                                <input type="hidden" asp-for="@Model.ListOfCart[i].Product.Price" />
+                                <input type="hidden" asp-for="@Model.ListOfCart[i].ProductId" />
+                                <input type="hidden" asp-for="@Model.ListOfCart[i].Id" />
+                            </li>
+                        }
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <p class="text-end fw-bold">Total Amount: <span id="orderTotal">@Model.OrderHeader.OrderTotal</span></p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <button asp-action="SaveOrder" asp-controller="Order" id="Pay-with-delivery" class="btn w-100">
+
+                                            <img src="~/Image/cash.png" alt="Khalti" style="max-height: 50px; margin-right: 10px;">  Cash with delivery
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
