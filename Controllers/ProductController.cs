@@ -32,6 +32,7 @@ namespace Thrift_Us.Controllers
 
         public IActionResult Index()
         {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var productIndexViewModel = _productService.GetAllProducts();
             return View(productIndexViewModel);
         }

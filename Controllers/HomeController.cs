@@ -30,9 +30,8 @@ namespace Thrift_Us.Controllers
 
         public IActionResult Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var products = _productService.GetAllProducts()
-                .OrderByDescending(Product => Product.ProductId)
+                .OrderByDescending(product => product.ProductId)
                 .Select(product => new ProductIndexViewModel
                 {
                     ProductId = product.ProductId,
@@ -43,48 +42,49 @@ namespace Thrift_Us.Controllers
                     Size = product.Size,
                     Quantity = product.Quantity,
                     ImageUrl = product.ImageUrl,
-
                     Condition = product.Condition,
                     CategoryId = product.CategoryId,
                     Category = product.Category,
                     PostedOn = product.PostedOn
-
                 })
                 .ToList();
 
-            var recommendedProducts = _recommendationService.GetRecommendedProducts(userId)
-                .Select(product => new ProductIndexViewModel
-                {
-                    ProductId = product.ProductId,
-                    ProductName = product.ProductName,
-                    Description = product.Description,
-                    Price = product.Price,
-                    RentalPrice = product.RentalPrice,
-                    Size = product.Size,
-                    Quantity = product.Quantity,
-                    ImageUrl = product.ImageUrl,
-      
-                    Condition = product.Condition,
-                    CategoryId = product.CategoryId,
-                    Category = product.Category,
-                    PostedOn = product.PostedOn,
-                    Similarity = product.Similarity
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var recommendedProducts = _recommendationService.GetRecommendedProducts(userId)
+                    .OrderByDescending(product => product.Similarity)
+                    .Select(product => new ProductIndexViewModel
+                    {
+                        ProductId = product.ProductId,
+                        ProductName = product.ProductName,
+                        Description = product.Description,
+                        Price = product.Price,
+                        RentalPrice = product.RentalPrice,
+                        Size = product.Size,
+                        Quantity = product.Quantity,
+                        ImageUrl = product.ImageUrl,
+                        Condition = product.Condition,
+                        CategoryId = product.CategoryId,
+                        Category = product.Category,
+                        PostedOn = product.PostedOn,
+                        Similarity = product.Similarity
+                    })
+                    .ToList();
 
-                })
-            
-                .ToList();
+                return View("Index", recommendedProducts);
+            }
 
-
-            return View(recommendedProducts);
-
-
+            return View("Index", products);
         }
 
-        public IActionResult Product()
-        {
-            var products = _productService.GetAllProducts().OrderByDescending(Product => Product.ProductId);
-            return View(products);
-        }
+
+        public async Task<IActionResult> Product()
+{
+    var products =  _productService.GetAllProducts().OrderByDescending(product => product.ProductId);
+    return View(products);
+}
+
         [AllowAnonymous]
         public async Task<IActionResult> Details(int Id)
         {

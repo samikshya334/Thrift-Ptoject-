@@ -15,7 +15,7 @@ public class RecommendationService : IRecommendationService
 
     public IEnumerable<Product> GetRecommendedProducts(string userId)
     {
-        // Get liked productId from all the user except the currentuser
+        // Get liked productId from all the user except the current user
         var likedProductIdsByAllUsers = _dbContext.Likes
             .Where(l => l.ApplicationUserId != userId)
             .Select(l => l.ProductId)
@@ -25,19 +25,25 @@ public class RecommendationService : IRecommendationService
 
         foreach (var product in _dbContext.Products)
         {
-            // Each product ko similariry calculate garne
+            // Each product ko similarity calculate garne
             double similarity = CalculateCosineSimilarity(userId, product.ProductId, likedProductIdsByAllUsers);
 
-            // yadi product chei kunei pani deuta differnt user le like gare based on similarity
+            // Validate similarity before adding the product to the recommended list
             if (similarity >= Threshold)
             {
-                // Populate the similarity property of Product
-                product.Similarity = similarity;
+                // Check if the product is liked by the user
+                var isLikedByUser = _dbContext.Likes.Any(l => l.ApplicationUserId == userId && l.ProductId == product.ProductId);
+                var isLikedBySimilarUsers = likedProductIdsByAllUsers.Contains(product.ProductId);
+                if (isLikedByUser|| isLikedBySimilarUsers)
+                {
+                    // Populate the similarity property of Product
+                    product.Similarity = similarity;
 
-                recommendedProducts.Add(product);
+                    recommendedProducts.Add(product);
 
-                if (recommendedProducts.Count >= MaxRecommendations)
-                    break;
+                    if (recommendedProducts.Count >= MaxRecommendations)
+                        break;
+                }
             }
         }
 

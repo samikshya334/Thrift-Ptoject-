@@ -36,7 +36,7 @@ namespace Thrift_Us.Data
                 .HasOne(p => p.ApplicationUser)
                 .WithMany()
                 .HasForeignKey(p => p.ApplicationUserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Rental>()
       .Property(r => r.TotalPrice)

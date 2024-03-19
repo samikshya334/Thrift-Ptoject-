@@ -42,8 +42,6 @@
                     <label for="rentalDuration" class="form-label">Rental Duration (in days):</label>
                     <input type="number" id="rentalDuration" name="rentalDuration" class="form-control" required oninput="updateTotalPrice()" />
                 </div>
-
-                <!-- Existing code for displaying total price -->
                 <div class="row mt-3">
                     <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 pr-4">
                         <ul class="list-group">
@@ -54,7 +52,8 @@
                         </ul>
                     </div>
                 </div>
-                <button type="summit" class="btn btn-primary mt-3" onclick="showRefundPolicyModal()">Rent Now</button>
+                <button type="submit" class="btn btn-primary mt-3" onclick="showRefundPolicyModal()">AddToCart</button>
+                <a asp-action="Summary" asp-controller="RentalCart" onclick="showRefundPolicyModal()">Rent Now</a>
 
                 <a asp-action="Index" class="btn btn-secondary mt-3">Back</a>
             </div>
@@ -63,7 +62,7 @@
 </form>
 
 <script>
-    function updateTotalPrice() {
+    function updateTotalPrice() {   
         var refundChargePolicy = parseFloat(document.getElementById("refundChargePolicy").value);
         var rentalDuration = parseFloat(document.getElementById("rentalDuration").value);
 
@@ -84,7 +83,7 @@
 
     function showRefundPolicyModal() {
         var refundAmount = calculateRefundAmount();
-        var message = "The refund amount will be provided after the return of the rental clothes. The refund amount is: $" + refundAmount;
+        var message = "The refund amount will be provided after the return of the rental clothes. The refund amount is: " + refundAmount;
         alert(message);
     }
 </script>

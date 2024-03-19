@@ -915,7 +915,7 @@ namespace Thrift_Us.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Thrift_Us.Models.Category", "Category")

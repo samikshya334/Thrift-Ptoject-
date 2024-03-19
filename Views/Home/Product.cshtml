@@ -1,201 +1,195 @@
-﻿﻿
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿﻿@{
+    ViewData["Title"] = "Home Page";
+}
+﻿
 @model IEnumerable<Thrift_Us.ViewModel.Product.ProductIndexViewModel>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Thrift Us - Your Gateway to Unique Finds</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Thrift_Us</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Thrift_Us.styles.css" asp-append-version="true" />
+    <link rel="icon" type="image/png" href="~/index/images/icons/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="~/index/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/index/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/index/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/index/fonts/linearicons-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/index/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/index/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="~/index/vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="~/index/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/index/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="~/index/vendor/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/index/vendor/MagnificPopup/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="~/index/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="~/index/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/index/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
-    <style>
-        body {
-            background-color: floralwhite;
-        }
-
-        .container {
-            background-color: linen;
-            border: 1px solid black;
-            padding: 2rem;
-            border-radius: 0.25rem;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-
-        h2 {
-            color: black;
-        }
-
-        .card {
-            border: 1px solid #dee2e6;
-            border-radius: 0.25rem;
-            transition: box-shadow 0.3s ease;
-            background-color: papayawhip;
-        }
-
-            .card:hover {
-                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            }
-
-        .card-img-top {
-            max-height: 200px;
-            object-fit: cover;
-        }
-
-        .card-title {
-            color: hotpink;
-        }
-
-        .card-text {
-            color: #495057;
-        }
-
-        .col-lg-4 col-md-4 col-sm-12 mb-4 {
-            width: 250px;
-        }
-
-        .card h-100 {
-            width: 200px;
-        }
-
-        .card-img-top {
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn-primary {
-            background-color: black;
-            border-color: lightpink;
-        }
-
-            .btn-primary:hover {
-                background-color: lightpink;
-                border-color: hotpink;
-            }
-
-        footer.bg-light {
-            background-color:floralwhite !important;
-            color: #555;
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-
-     
- 
-
-        footer .footer {
-            text-align: center;
-            padding-top: 20px;
-        }
-
-        footer ul {
-            list-style: none;
-            padding: 0;
-        }
-
-            footer ul li {
-                margin-bottom: 10px;
-            }
-
-                footer ul li i {
-                    margin-right: 8px;
-                }
-
-        footer h4 {
-            color: #000;
-            margin-bottom: 15px;
-        }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 
-      
-    </style>
 </head>
-<body>
-
-
-    
-   
-        <h2 class="text-center mb-4">All Products</h2>
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
-                    <div class="card h-100">
-                        <div class="card-img-top">
-                            <img src="/Content/Image/@item.ImageUrl" alt="Product Image" style="height:220px; ">
-                        </div>
-                        <div class="card-body">
-                            <span><b>@Html.DisplayFor(modelItem => item.ProductName)</b> </span>
-                            <span>@Html.DisplayFor(modelItem => item.Description)</span>
-                            <br>
-                            <span>@Html.DisplayFor(modelItem => item.Price)</span>
-                            <br>
-                            <span>@Html.DisplayFor(modelItem => item.Size)</span>
-                            <br>
-                            <span>@Html.DisplayFor(modelItem => item.RentalPrice)</span>
-                            <br>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group">
-
-                            <a asp-action="Details" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-warning mx-1 rounded">Details</a>
+<body class="animsition">
+    <section>
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <div class="block2">
+                            <div class="block2-pic hov-img0" style="position: relative;">
+                                <img src="/Content/Image/@item.ImageUrl" alt="IMG-PRODUCT" width="300" height="500" />
                             </div>
-                        <div class="btn-group">
-                            <a asp-action="Rent" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-danger mx-1 rounded">Rent</a>
-                        </div>
-                        <div class="btn-group">
-                            <form asp-action="Like" asp-controller="Like" method="post">
-                                <input type="hidden" name="productId" value="@item.ProductId" />
-                                <button type="submit" class="btn btn-primary mx-1 rounded">Like</button>
-                            </form>
-                        </div>
+                            <div class="block2-txt flex-w flex-t p-t-14">
+                                <div class="block2-txt-child1 flex-col-l">
+                                    <h4 class="block2-name stext-104 cl4 hov-cl1 trans-04">@Html.DisplayFor(modelItem => item.ProductName)</h4>
+                                    <p class="block2-info stext-102 trans-04">@Html.DisplayFor(modelItem => item.Description)</p>
+                                    <span class="block2-price stext-105 cl3">@Html.DisplayFor(modelItem => item.Price)</span>
+                                </div>
+                                <div class="block2-txt-child2 flex-r p-t-3">
+
+                                    <div class="btn-group mr-2">
+                                        <a asp-action="Details" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-primary">Details</a>
+                                    </div>
+                                    <div class="btn-group mr-2">
+                                        <a asp-action="Rent" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-danger">Rent</a>
+                                    </div>
+                                    <form asp-action="Like" asp-controller="Like" method="post">
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <button type="submit"><i class="fas fa-heart"></i></button>
+                                    </form>
+                                </div>
+                            </div>
 
                         </div>
+
+
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    
+    </section>
+	<footer class="bg3 p-t-75 p-b-32">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Categories
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Women
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Men
+							</a>
+						</li>
+
+					
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Help
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Track Order
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								FAQs
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						GET IN TOUCH
+					</h4>
+
+					<p class="stext-107 cl7 size-201">
+						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+					</p>
+
+					<div class="p-t-27">
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-instagram"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-pinterest-p"></i>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Newsletter
+					</h4>
+
+					<form>
+						<div class="wrap-input1 w-full p-b-4">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+							<div class="focus-input1 trans-04"></div>
+						</div>
+					</form>
+				</div>
+                <p class="stext-107 cl6 txt-center">
+          
+                    Copyright &copy; All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"> </i> distributed by Thrift-Us
+                    </p>
+			</div>
+
+		
+		</div>
+	</footer>
 
 
-
-
-
+    <div class="btn-back-to-top" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <i class="zmdi zmdi-chevron-up"></i>
+        </span>
     </div>
-    </div>
 
+    <script src="~/index/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="~/index/vendor/animsition/js/animsition.min.js"></script>
+    <script src="~/index/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/index/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/index/vendor/select2/select2.min.js"></script>
 
-    </div>
-    </div>
+    <script src="~/index/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/index/vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="~/index/vendor/slick/slick.min.js"></script>
+    <script src="~/index/js/slick-custom.js"></script>
+    <script src="~/index/vendor/parallax100/parallax100.js"></script>
 
+    <script src="~/index/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+    <script src="~/index/vendor/isotope/isotope.pkgd.min.js"></script>
+    <script src="~/index/vendor/sweetalert/sweetalert.min.js"></script>
+
+    <script src="~/index/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+    <script src="~/index/js/main.js"></script>
+
 
 </body>
-<
-<footer class="bg-light py-5">
-    <div class="container text-center">
-        <span>© Copyright 2024 Thrift-Us. All rights reserved.</span>
-    </div>
-</footer>
-
-<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
 </html>
-
-
-
-
-
-
-
