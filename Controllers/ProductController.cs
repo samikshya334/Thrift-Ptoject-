@@ -30,10 +30,10 @@ namespace Thrift_Us.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task< IActionResult> Index()
         {
             var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var productIndexViewModel = _productService.GetAllProducts();
+            var productIndexViewModel = await _productService.GetAllProducts(userId);
             return View(productIndexViewModel);
         }
 

@@ -12,8 +12,8 @@ using Thrift_Us.Data;
 namespace Thrift_Us.Migrations
 {
     [DbContext(typeof(ThriftDbContext))]
-    [Migration("20240310101207_thrift-us")]
-    partial class thriftus
+    [Migration("20240321063708_hello")]
+    partial class hello
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

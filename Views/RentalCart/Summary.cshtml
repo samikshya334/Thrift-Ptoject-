@@ -56,7 +56,7 @@
                     <div class="form-row mb-4">
                         <div class="col">
                             <label for="startDateTxt">Start Date</label>
-                            <input id="startDateTxt" type="date" asp-for="@Model.RentalOrderHeader.StartDate" class="form-control" />
+                            <input id="startDateTxt" type="date" asp-for="@Model.RentalOrderHeader.StartDate" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" type="datetime-local" />
                         </div>
                         <div class="col">
                             <label for="rentalDurationTxt">Rental Duration</label>
@@ -66,7 +66,7 @@
                     <div class="form-row mb-4">
                         <div class="col">
                             <label for="endDateTxt">End Date</label>
-                            <input id="endDateTxt" type="date" asp-for="@Model.RentalOrderHeader.EndDate" class="form-control" />
+                            <input id="endDateTxt" type="date" asp-for="@Model.RentalOrderHeader.EndDate" class="form-control"  />
                         </div>
                         <div class="col">
                             <label for="orderDateTxt">Order Date</label>
@@ -162,7 +162,6 @@
             var endDate = new Date(endDateInput.value);
             var rentalDuration = (endDate - startDate) / (1000 * 60 * 60 * 24);
 
-            // Check if the rental duration exceeds the maximum allowed duration
             if (rentalDuration > maxRentalDuration) {
                 // Adjust the end date to match the maximum allowed duration
                 endDate.setDate(startDate.getDate() + maxRentalDuration);

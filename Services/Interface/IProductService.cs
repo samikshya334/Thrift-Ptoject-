@@ -6,7 +6,7 @@ namespace Thrift_Us.Services.Interface
 {
     public interface IProductService
     {
-       List<ProductIndexViewModel> GetAllProducts();
+        Task<IEnumerable<ProductIndexViewModel>> GetAllProducts(string userId = null);
         ProductEditViewModel GetProductById(int productId);
         List<Category> GetCategories(); 
         bool CreateProduct(ProduceCreateViewModel viewModel, string userId);

@@ -28,25 +28,28 @@ namespace Thrift_Us.Controllers
             _recommendationService = recommendationService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var products = _productService.GetAllProducts()
-                .OrderByDescending(product => product.ProductId)
-                .Select(product => new ProductIndexViewModel
-                {
-                    ProductId = product.ProductId,
-                    ProductName = product.ProductName,
-                    Description = product.Description,
-                    Price = product.Price,
-                    RentalPrice = product.RentalPrice,
-                    Size = product.Size,
-                    Quantity = product.Quantity,
-                    ImageUrl = product.ImageUrl,
-                    Condition = product.Condition,
-                    CategoryId = product.CategoryId,
-                    Category = product.Category,
-                    PostedOn = product.PostedOn
-                })
+
+            var products = await _productService.GetAllProducts();
+
+            products = products.OrderByDescending(product => product.ProductId)
+                        .Select(product => new ProductIndexViewModel
+                        {
+                            ProductId = product.ProductId,
+                            ProductName = product.ProductName,
+                            Description = product.Description,
+                            Price = product.Price,
+                            RentalPrice = product.RentalPrice,
+                            Size = product.Size,
+                            Quantity = product.Quantity,
+                            ImageUrl = product.ImageUrl,
+                            Condition = product.Condition,
+                            CategoryId = product.CategoryId,
+                            Category = product.Category,
+                            PostedOn = product.PostedOn,
+                            IsOutOfStock = product.Quantity == 0
+                        })
                 .ToList();
 
             if (User.Identity.IsAuthenticated)
@@ -68,6 +71,7 @@ namespace Thrift_Us.Controllers
                         CategoryId = product.CategoryId,
                         Category = product.Category,
                         PostedOn = product.PostedOn,
+                        IsOutOfStock = product.Quantity == 0,
                         Similarity = product.Similarity
                     })
                     .ToList();
@@ -79,11 +83,31 @@ namespace Thrift_Us.Controllers
         }
 
 
+     
         public async Task<IActionResult> Product()
-{
-    var products =  _productService.GetAllProducts().OrderByDescending(product => product.ProductId);
-    return View(products);
-}
+        {
+         
+            var products = await _productService.GetAllProducts();
+
+            products = products.OrderByDescending(product => product.ProductId).Select(product => new ProductIndexViewModel
+            {
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                Description = product.Description,
+                Price = product.Price,
+                RentalPrice = product.RentalPrice,
+                Size = product.Size,
+                Quantity = product.Quantity,
+                ImageUrl = product.ImageUrl,
+                Condition = product.Condition,
+                CategoryId = product.CategoryId,
+                Category = product.Category,
+                PostedOn = product.PostedOn,
+                IsOutOfStock = product.Quantity == 0
+            }).ToList();
+
+            return View(products);
+        }
 
         [AllowAnonymous]
         public async Task<IActionResult> Details(int Id)

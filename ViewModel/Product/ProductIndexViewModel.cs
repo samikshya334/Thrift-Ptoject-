@@ -26,6 +26,7 @@ namespace Thrift_Us.ViewModel.Product
         public DateTime PostedOn { get; set; }
         public string ApplicationUserId { get; set; }
         public virtual IdentityUser ApplicationUser { get; set; }
+        public bool IsOutOfStock { get; set; }
         public List<ProductIndexViewModel> AllProducts { get; set; }  
         public List<ProductIndexViewModel> RecommendedProducts { get; set; }  
     }

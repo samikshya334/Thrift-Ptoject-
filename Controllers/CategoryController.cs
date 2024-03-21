@@ -5,7 +5,7 @@ using Thrift_Us.ViewModel.Category;
 
 namespace Thrift_Us.Areas.Admin.Controllers
 {
-
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly IThriftService _service;

@@ -34,40 +34,61 @@
 <body class="animsition">
     <section>
         <div class="container">
-            <div class="row">
-                @foreach (var item in Model)
-                {
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                        <div class="block2">
-                            <div class="block2-pic hov-img0" style="position: relative;">
-                                <img src="/Content/Image/@item.ImageUrl" alt="IMG-PRODUCT" width="300" height="500" />
-                            </div>
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l">
-                                    <h4 class="block2-name stext-104 cl4 hov-cl1 trans-04">@Html.DisplayFor(modelItem => item.ProductName)</h4>
-                                    <p class="block2-info stext-102 trans-04">@Html.DisplayFor(modelItem => item.Description)</p>
-                                    <span class="block2-price stext-105 cl3">@Html.DisplayFor(modelItem => item.Price)</span>
+            <h2 class="text-center mb-4">Recommended Products</h2>
+            <div class="rowsection">
+                <div class="container">
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                                <div class="block2">
+                                    @if (item.IsOutOfStock)
+                                    {
+
+                                        <div class="block2-pic hov-img0" style="position: relative;">
+                                            <img src="/Content/Image/@item.ImageUrl" alt="IMG-PRODUCT" width="300" height="500" />
+                                            <img src="/Image/out.png " alt="IMG-PRODUCT" style="position:absolute; bottom:0; right:0; width:50%" />
+                                        </div>
+                                        <div class="block2-txt flex-w flex-t p-t-14">
+                                            <div class="block2-txt-child1 flex-col-l">
+                                                <h4 class="block2-name stext-104 cl4 hov-cl1 trans-04">@Html.DisplayFor(modelItem => item.ProductName)</h4>
+                                                <p class="block2-info stext-102 trans-04">@Html.DisplayFor(modelItem => item.Description)</p>
+                                                <span class="block2-price stext-105 cl3">@Html.DisplayFor(modelItem => item.Price)</span>
+                                            </div>
+                                        </div>
+                                  
+                                    }
+                                    else
+                                    {
+                                        <div class="block2-pic hov-img0" style="position: relative;">
+                                            <img src="/Content/Image/@item.ImageUrl" alt="IMG-PRODUCT" width="300" height="500" />
+                                        </div>
+                                        <div class="block2-txt flex-w flex-t p-t-14">
+                                            <div class="block2-txt-child1 flex-col-l">
+                                                <h4 class="block2-name stext-104 cl4 hov-cl1 trans-04">@Html.DisplayFor(modelItem => item.ProductName)</h4>
+                                                <p class="block2-info stext-102 trans-04">@Html.DisplayFor(modelItem => item.Description)</p>
+                                                <span class="block2-price stext-105 cl3">@Html.DisplayFor(modelItem => item.Price)</span>
+                                            </div>
+                                            <div class="block2-txt-child2 flex-r p-t-3">
+                                                <div class="btn-group mr-2">
+                                                    <a asp-action="Details" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-primary">Details</a>
+                                                </div>
+                                                <div class="btn-group mr-2">
+                                                    <a asp-action="Rent" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-danger">Rent</a>
+                                                </div>
+                                                <form asp-action="Like" asp-controller="Like" method="post">
+                                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                                    <button type="submit"><i class="fas fa-heart"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
-                                <div class="block2-txt-child2 flex-r p-t-3">
-
-                                    <div class="btn-group mr-2">
-                                        <a asp-action="Details" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-primary">Details</a>
-                                    </div>
-                                    <div class="btn-group mr-2">
-                                        <a asp-action="Rent" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-danger">Rent</a>
-                                    </div>
-                                    <form asp-action="Like" asp-controller="Like" method="post">
-                                        <input type="hidden" name="productId" value="@item.ProductId" />
-                                        <button type="submit"><i class="fas fa-heart"></i></button>
-                                    </form>
-                                </div>
                             </div>
-
-                        </div>
-
+                        }
 
                     </div>
-                }
+                </div>
             </div>
         </div>
     </section>

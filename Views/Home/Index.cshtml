@@ -27,6 +27,8 @@
     <link rel="stylesheet" type="text/css" href="~/index/css/util.css">
     <link rel="stylesheet" type="text/css" href="~/index/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
 
 
 </head>
@@ -51,9 +53,9 @@
                             </div>
 
                             <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
-                                <a class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-                                    Shop Now
-                                </a>
+                                <h5 class="ltext-201 cl2 p-t-19 p-b-43 respon1 text-white">
+                                    Hurry up!!!
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -72,12 +74,12 @@
                                     Jackets & Coats
                                 </h2>
                             </div>
-
-                            <div class="layer-slick1 animated visible-false" data-appear="slideInUp" data-delay="1600">
-                                <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-                                    Shop Now
-                                </a>
+                            <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
+                                <h5 class="ltext-201 cl2 p-t-19 p-b-43 respon1 text-white">
+                                    Hurry up!!!
+                                </h5>
                             </div>
+                          
                         </div>
                     </div>
                 </div>
@@ -86,7 +88,7 @@
                         <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
                             <div class="layer-slick1 animated visible-false" data-appear="rotateInDownLeft" data-delay="0">
                                 <span class="ltext-101 cl2 respon2 text-white">
-                                    WomenMen Collection 2024
+                                    Women Collection 2024
                                 </span>
                             </div>
 
@@ -96,10 +98,10 @@
                                 </h2>
                             </div>
 
-                            <div class="layer-slick1 animated visible-false" data-appear="rotateIn" data-delay="1600">
-                                <a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-                                    Shop Now
-                                </a>
+                            <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
+                                <h5 class="ltext-201 cl2 p-t-19 p-b-43 respon1 text-white">
+                                    Hurry up!!!
+                                </h5>
                             </div>
                         </div>
                     </div>
@@ -107,50 +109,66 @@
             </div>
         </div>
     </section>
-    
+
     <section>
         <div class="container">
             <h2 class="text-center mb-4">Recommended Products</h2>
             <div class="rowsection">
                 <div class="container">
                     <div class="row">
-                    @foreach (var item in Model)
-                    {
+                        @foreach (var item in Model)
+                        {
                             <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                                 <div class="block2">
-                                    <div class="block2-pic hov-img0" style="position: relative;">
-                                        <img src="/Content/Image/@item.ImageUrl" alt="IMG-PRODUCT" width="300" height="500" />
-                                    </div>
-                                    <div class="block2-txt flex-w flex-t p-t-14">
-                                        <div class="block2-txt-child1 flex-col-l">
-                                            <h4 class="block2-name stext-104 cl4 hov-cl1 trans-04">@Html.DisplayFor(modelItem => item.ProductName)</h4>
-                                            <p class="block2-info stext-102 trans-04">@Html.DisplayFor(modelItem => item.Description)</p>
-                                            <span class="block2-price stext-105 cl3">@Html.DisplayFor(modelItem => item.Price)</span>
-                                        </div>
-                                        <div class="block2-txt-child2 flex-r p-t-3">
+                                    @if (item.IsOutOfStock)
+                                    {
 
-                                            <div class="btn-group mr-2">
-                                                <a asp-action="Details" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-primary">Details</a>
-                                            </div>
-                                            <div class="btn-group mr-2">
-                                                <a asp-action="Rent" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-danger">Rent</a>
-                                            </div>
-                                            <form asp-action="Like" asp-controller="Like" method="post">
-                                                <input type="hidden" name="productId" value="@item.ProductId" />
-                                                <button type="submit"><i class="fas fa-heart"></i></button>
-                                            </form>
+                                        <div class="block2-pic hov-img0" style="position: relative;">
+                                            <img src="/Content/Image/@item.ImageUrl" alt="IMG-PRODUCT" width="300" height="500" />
+                                            <img src="/Image/out.png " alt="IMG-PRODUCT" style="position:absolute; bottom:0; right:0; width:50%" />
                                         </div>
-                                    </div>
+                                        <div class="block2-txt flex-w flex-t p-t-14">
+                                            <div class="block2-txt-child1 flex-col-l">
+                                                <h4 class="block2-name stext-104 cl4 hov-cl1 trans-04">@Html.DisplayFor(modelItem => item.ProductName)</h4>
+                                                <p class="block2-info stext-102 trans-04">@Html.DisplayFor(modelItem => item.Description)</p>
+                                                <span class="block2-price stext-105 cl3">@Html.DisplayFor(modelItem => item.Price)</span>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="block2-pic hov-img0" style="position: relative;">
+                                            <img src="/Content/Image/@item.ImageUrl" alt="IMG-PRODUCT" width="300" height="500" />
+                                        </div>
+                                        <div class="block2-txt flex-w flex-t p-t-14">
+                                            <div class="block2-txt-child1 flex-col-l">
+                                                <h4 class="block2-name stext-104 cl4 hov-cl1 trans-04">@Html.DisplayFor(modelItem => item.ProductName)</h4>
+                                                <p class="block2-info stext-102 trans-04">@Html.DisplayFor(modelItem => item.Description)</p>
+                                                <span class="block2-price stext-105 cl3">@Html.DisplayFor(modelItem => item.Price)</span>
+                                            </div>
+                                            <div class="block2-txt-child2 flex-r p-t-3">
+                                                <div class="btn-group mr-2">
+                                                    <a asp-action="Details" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-primary">Details</a>
+                                                </div>
+                                                <div class="btn-group mr-2">
+                                                    <a asp-action="Rent" asp-controller="Home" asp-route-id="@item.ProductId" class="btn btn-outline-danger">Rent</a>
+                                                </div>
+                                                <form asp-action="Like" asp-controller="Like" method="post">
+                                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                                    <button type="submit"><i class="fas fa-heart"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
-                    }
+                        }
+
                     </div>
                 </div>
-             </div>
-             </div>
+            </div>
+        </div>
     </section>
-               
-  
 
     <footer class="bg3 p-t-75 p-b-32">
         <div class="container">

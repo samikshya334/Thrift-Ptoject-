@@ -16,6 +16,7 @@ using Thrift_Us.ViewModels;
 
 namespace Thrift_Us.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;

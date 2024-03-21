@@ -134,6 +134,12 @@ public class RentalOrderService : IRentalOrderService
 
                     _context.RentalOrderDetails.Add(RentalorderDetail);
                     await _context.SaveChangesAsync();
+                     var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == cartItem.ProductId);
+                    if (product != null)
+                    {
+                        product.Quantity -= cartItem.Count;
+                    }
+
 
                     var cart = await _context.RentalCarts.FirstOrDefaultAsync(x => x.Id == cartItem.Id);
                     if (cart != null)

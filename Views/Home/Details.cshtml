@@ -37,12 +37,7 @@
                         <li class="list-group-item">Price: @Model.Price</li>
                         <li class="list-group-item">Size: @Model.Size</li>
                         <li class="list-group-item">Condition: @Model.Condition</li>
-                        <li class="list-group-item">
-                            Quantity:
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="changeQuantity(false)">-</button>
-                            <span id="quantity">@Model.Count</span>
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="changeQuantity(true)">+</button>
-                        </li>
+                       
                     </ul>
                 </div>
             </div>
@@ -59,21 +54,4 @@
 </div>
    
 </form>
-<script>
-    function changeQuantity(increment) {
-        var quantityElement = document.getElementById('quantity');
-        var hiddenQuantityInput = document.getElementById('hiddenQuantity');
-        var currentQuantity = parseInt(quantityElement.innerText);
 
-        if (increment) {
-            currentQuantity++;
-        } else if (currentQuantity > 1) {
-            currentQuantity--;
-        }
-
-        quantityElement.innerText = currentQuantity;
-        hiddenQuantityInput.value = currentQuantity; 
-    }
-    
-
-</script>

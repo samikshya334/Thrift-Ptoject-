@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Thrift_Us.Data;
 using Thrift_Us.Models;
@@ -16,33 +17,49 @@ namespace Thrift_Us.Services
     {
         private readonly ThriftDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<IdentityUser> _usermanager;
 
-        public ProductService(ThriftDbContext context, IWebHostEnvironment webHostEnvironment)
+        public ProductService(ThriftDbContext context, IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> usermanager)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _usermanager = usermanager;
         }
 
-        public List<ProductIndexViewModel> GetAllProducts()
+        public async Task<IEnumerable<ProductIndexViewModel>> GetAllProducts(string userId = null)
         {
-            return _context.Products.AsNoTracking()
-                .Include(x => x.Category)
-                .Select(x => new ProductIndexViewModel
+            IQueryable<Product> query = _context.Products.AsNoTracking().Include(x => x.Category);
+
+            if (userId != null)
+            {
+                var user = await _usermanager.FindByIdAsync(userId);
+                var roles = await _usermanager.GetRolesAsync(user);
+
+                if (roles.Contains("Seller"))
                 {
-                    ProductId = x.ProductId,
-                    ProductName = x.ProductName,
-                    Description = x.Description,
-                    CategoryId = x.CategoryId,
-                    Category = x.Category,
-                    Price = x.Price,
-                    RentalPrice= x.RentalPrice,
-                    Size = x.Size,
-                    Quantity=x.Quantity,
-                    Condition = x.Condition,
-                    ImageUrl = x.ImageUrl,
-                    PostedOn = x.PostedOn
-                }).ToList();
+                    query = query.Where(x => x.ApplicationUserId == userId);
+                }
+            }
+
+            var products = await query.Select(x => new ProductIndexViewModel
+            {
+                ProductId = x.ProductId,
+                ProductName = x.ProductName,
+                Description = x.Description,
+                CategoryId = x.CategoryId,
+                Category = x.Category,
+                Price = x.Price,
+                RentalPrice = x.RentalPrice,
+                Size = x.Size,
+                Quantity = x.Quantity,
+                Condition = x.Condition,
+                ImageUrl = x.ImageUrl,
+                PostedOn = x.PostedOn
+            }).ToListAsync();
+
+            return products;
         }
+
 
         public ProductEditViewModel GetProductById(int productId)
         {

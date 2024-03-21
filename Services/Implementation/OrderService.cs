@@ -126,6 +126,11 @@ public class OrderService : IOrderService
 
                     _context.OrderDetails.Add(orderDetail);
                     await _context.SaveChangesAsync();
+                    var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == cartItem.ProductId);
+                    if (product != null)
+                    {
+                        product.Quantity -= cartItem.Count;
+                    }
 
                     var cart = await _context.Carts.FirstOrDefaultAsync(x => x.Id == cartItem.Id);
                     if (cart != null)
