@@ -5,7 +5,7 @@ using Thrift_Us.Services.Interface;
 public class RecommendationService : IRecommendationService
 {
     private readonly ThriftDbContext _dbContext;
-    private const double Threshold = 0.5; // Adjust as needed
+    private const double Threshold = 0.5; //hamle threshold deko
     private const int MaxRecommendations = 10;
 
     public RecommendationService(ThriftDbContext dbContext)
@@ -25,13 +25,13 @@ public class RecommendationService : IRecommendationService
 
         foreach (var product in _dbContext.Products)
         {
-            // Each product ko similarity calculate garne
+            // Each product ko similarity calculate garcha
             double similarity = CalculateCosineSimilarity(userId, product.ProductId, likedProductIdsByAllUsers);
 
             // Validate similarity before adding the product to the recommended list
             if (similarity >= Threshold)
             {
-                // Check if the product is liked by the user
+                // product like garye cha ki nei vanyera check garcha 
                 var isLikedByUser = _dbContext.Likes.Any(l => l.ApplicationUserId == userId && l.ProductId == product.ProductId);
                 var isLikedBySimilarUsers = likedProductIdsByAllUsers.Contains(product.ProductId);
                 if (isLikedByUser|| isLikedBySimilarUsers)
@@ -52,26 +52,28 @@ public class RecommendationService : IRecommendationService
 
     private double CalculateCosineSimilarity(string userId, int productId, List<int> likedProductIdsByAllUsers)
     {
-        // Get liked product IDs by the current user
+        // Get liked productid by the current user
         var likedProductIdsByUser = _dbContext.Likes
             .Where(l => l.ApplicationUserId == userId)
             .Select(l => l.ProductId)
             .ToList();
 
-        // Add the current productID to the list if it is  liked by the current user
+        // Add the current productid to the list if it is  liked by the current user
         if (likedProductIdsByUser.Contains(productId))
         {
             likedProductIdsByUser.Add(productId);
         }
 
-        // Calculate dot product and magnitudes
+        // dot product and magnitudes calculate gareko
         double dotProduct = likedProductIdsByUser.Intersect(likedProductIdsByAllUsers).Count();
         double magnitude1 = Math.Sqrt(likedProductIdsByUser.Count);
         double magnitude2 = Math.Sqrt(likedProductIdsByAllUsers.Count);
 
-        // Calculate cosine similarity
+        // cosine similarity calculate gareko
         double cosineSimilarity = dotProduct / (magnitude1 * magnitude2);
 
         return cosineSimilarity;
     }
+
+
 }
